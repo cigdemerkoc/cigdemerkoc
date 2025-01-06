@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZIP File Editor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+    <h1>ZIP File Editor</h1>
+    <form id="zipForm">
+        <label for="newContent">New content for index.html:</label><br>
+        <textarea id="newContent" rows="10" cols="50" placeholder="Enter new content for index.html here"></textarea><br><br>
+
+        <button type="button" id="updateZipButton">Update ZIP</button>
+    </form>
+
+    <p id="status"></p>
+
+    <script>
+        // Preloaded ZIP file content (as a base64 string or ArrayBuffer)
+        const preloadedZipBase64 = "<base64-encoded-zip-data>"; // Replace with your actual base64 ZIP data
+
+        document.getElementById('updateZipButton').addEventListener('click', async () => {
+            const newContent = document.getElementById('newContent').value;
+            const statusElement = document.getElementById('status');
+
+            if (!newContent) {
+                statusElement.textContent = 'Please enter content for index.html.';
+                return;
+            }
+
+            const zip = new JSZip();
+
+            try {
+                // Decode the preloaded ZIP file
+                const zipData = await fetch(`data:application/zip;base64,${preloadedZipBase64}`).then(res => res.arrayBuffer());
+                await zip.loadAsync(zipData);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZIP File Editor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            resize: none;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #status {
+            margin-top: 10px;
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ZIP File Editor</h1>
+        <form id="zipForm">
+            <label for="newContent">New content for index.html:</label>
+            <textarea id="newContent" rows="10" placeholder="Enter new content for index.html here"></textarea>
+
+            <button type="button" id="updateZipButton">Update ZIP</button>
+        </form>
+
+        <p id="status"></p>
+    </div>
+
+    <script>
+        // Preloaded ZIP file content (as a base64 string or ArrayBuffer)
+        const preloadedZipBase64 = "<base64-encoded-zip-data>"; // Replace with your actual base64 ZIP data
+
+        document.getElementById('updateZipButton').addEventListener('click', async () => {
+            const newContent = document.getElementById('newContent').value;
+            const statusElement = document.getElementById('status');
+
+            if (!newContent) {
+                statusElement.textContent = 'Please enter content for index.html.';
+                return;
+            }
+
+            const zip = new JSZip();
+
+            try {
+                // Decode the preloaded ZIP file
+                const zipData = await fetch(`data:application/zip;base64,${preloadedZipBase64}`).then(res => res.arrayBuffer());
+                await zip.loadAsync(zipData);
+
+                // Update index.html
+                zip.file('index.html', newContent);
+
+                // Generate updated ZIP file
+                const updatedZipBlob = await zip.generateAsync({ type: 'blob' });
+
+                // Trigger download of the updated ZIP file
+                const downloadLink = document.createElement('a');
+                downloadLink.href = URL.createObjectURL(updatedZipBlob);
+                downloadLink.download = 'updated.zip';
+                downloadLink.click();
+
+                statusElement.textContent = 'ZIP file updated and ready for download!';
+            } catch (error) {
+                console.error('Error processing ZIP file:', error);
+                statusElement.textContent = 'An error occurred while processing the ZIP file.';
+            }
+        });
+    </script>
+</body>
+</html>
+
+                // Update index.html
+                zip.file('index.html', newContent);
+
+                // Generate updated ZIP file
+                const updatedZipBlob = await zip.generateAsync({ type: 'blob' });
+
+                // Trigger download of the updated ZIP file
+                const downloadLink = document.createElement('a');
+                downloadLink.href = URL.createObjectURL(updatedZipBlob);
+                downloadLink.download = 'updated.zip';
+                downloadLink.click();
+
+                statusElement.textContent = 'ZIP file updated and ready for download!';
+            } catch (error) {
+                console.error('Error processing ZIP file:', error);
+                statusElement.textContent = 'An error occurred while processing the ZIP file.';
+            }
+        });
+    </script>
+</body>
+</html>
